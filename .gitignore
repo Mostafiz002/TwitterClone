@@ -1,0 +1,80 @@
+# ================================
+# .NET / Visual Studio
+# ================================
+
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# ================================
+# .NET Generated Files
+# ================================
+
+*.dll
+*.exe
+*.pdb
+*.cache
+*.nupkg
+
+# ================================
+# NuGet
+# ================================
+
+packages/
+*.nuget.props
+*.nuget.targets
+
+# ================================
+# Test / Coverage
+# ================================
+
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# ================================
+# Logs
+# ================================
+
+*.log
+logs/
+
+# ================================
+# Environment / Secrets
+# ================================
+
+.env
+.env.*
+!.env.example
+
+# User secrets
+secrets.json
+
+# ================================
+# OS Files
+# ================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ================================
+# Publish Output
+# ================================
+
+publish/
