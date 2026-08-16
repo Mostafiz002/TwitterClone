@@ -1,5 +1,15 @@
 ﻿using TwitterClone.Domain.Entities;
 
-var likeNotification = new LikeNotification(Guid.NewGuid());
+var notifications = new List<Notification>()
+{
+    new FriendRequestNotification(Guid.NewGuid()),
+    new CommentNotification(Guid.NewGuid()),
+    new SystemNotification(),
+    new LikeNotification(Guid.NewGuid()),
+    new MensionNotification(Guid.NewGuid()),
+};
 
-Console.WriteLine(likeNotification.DescribeRecords());
+foreach(var notification in notifications)
+{
+    Console.WriteLine(notification.GetMessage());
+}

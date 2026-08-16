@@ -4,9 +4,13 @@
     {
         public Guid SystemNotificationByUserId { get; set; }
 
-        public SystemNotification(Guid systemNotificationByUserId) : base("System")
+        public SystemNotification() : base("System")
         {
-            SystemNotificationByUserId = systemNotificationByUserId;
+        }
+
+        public override string GetMessage()
+        {
+            return $"System notification from user with ID {SystemNotificationByUserId}.";
         }
     }
 }

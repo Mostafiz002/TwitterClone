@@ -1,6 +1,6 @@
 ﻿namespace TwitterClone.Domain.Entities
 {
-    public class Notification : BaseEntity
+    public abstract class Notification : BaseEntity
     {
         private Guid UserId { get; set; }
         protected string Message { get; set; }
@@ -11,5 +11,7 @@
         {
             Type = notificatinType;
         }
+
+        public abstract string GetMessage(); // mendatory method to be implemented by clild classes // abstruction
     }
 }

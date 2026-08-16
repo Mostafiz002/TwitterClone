@@ -13,5 +13,10 @@
             var baseRecords = base.DescribeRecords();
             return $"{baseRecords} -- Notification Type: {Type}, Like By User Id: {LikeByUserId}, Created At: {CreatedAt}";
         }
+
+        public override string GetMessage()
+        {
+            return $"User with ID {LikeByUserId} liked your post.";
+        }
     }
 }
