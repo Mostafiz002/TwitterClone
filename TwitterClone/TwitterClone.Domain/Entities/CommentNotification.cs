@@ -7,5 +7,10 @@
         {
             CommentByUserId = commentByUserId;
         }
+
+        public override string GetMessage()
+        {
+            return $"Comment from user with ID {CommentByUserId}.";
+        }
     }
 }

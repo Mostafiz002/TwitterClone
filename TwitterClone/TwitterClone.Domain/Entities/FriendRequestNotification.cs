@@ -8,5 +8,10 @@
         {
             FriendRequestByUserId = friendRequestByUserId;
         }
+
+        public override string GetMessage()
+        {
+            return $"Friend request from user with ID {FriendRequestByUserId}.";
+        }
     }
 }
