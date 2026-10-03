@@ -38,5 +38,29 @@ namespace TwitterClone.Api.Controllers
                 maxLength = maxTweetLength
             });
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetTweetById(int id)
+        {
+            return Ok($"{id} found");
+        }
+
+        [HttpPost]
+        public IActionResult CreateTweet()
+        {
+            return Ok("Success");
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult UpdateTweet(int id)
+        {
+            return Ok($"{id} updated");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTweet(int id)
+        {
+            return Ok($"{id} deleted");
+        }
     }
 }
