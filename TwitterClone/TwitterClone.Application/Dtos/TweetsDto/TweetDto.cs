@@ -1,4 +1,8 @@
-﻿namespace TwitterClone.Api.Dtos.TweetsDto
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TwitterClone.Application.Dtos.TweetsDto
 {
     public class TweetDto
     {
