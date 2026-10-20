@@ -1,8 +1,12 @@
-﻿using TwitterClone.Domain.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using TwitterClone.Application.Interfaces;
+using TwitterClone.Domain.Entities;
 
-namespace TwitterClone.Api.Data
+namespace TwitterClone.Infrastructure.Repositories
 {
-    public class TweetRepository
+    public class TweetRepository : ITweetRepository
     {
         private List<Tweet> _tweets { get; set; } = new List<Tweet>();
 
@@ -33,7 +37,7 @@ namespace TwitterClone.Api.Data
             return existingTweet;
         }
 
-        public bool DeleteTweet (Tweet tweet)
+        public bool DeleteTweet(Tweet tweet)
         {
             return _tweets.Remove(tweet);
         }
