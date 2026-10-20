@@ -9,12 +9,18 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 // Register
+//user
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+//tweet
+builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
 builder.Services.AddScoped<ITweetService, TweetService>();
+//retweet
 builder.Services.AddScoped<IRetweetService, RetweetService>();
 builder.Services.AddSingleton<IRetweetRepository, RetweetRepository>();
+//notification
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
 
 var app = builder.Build();
 
