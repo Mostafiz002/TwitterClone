@@ -24,6 +24,9 @@ builder.Services.AddSingleton<INotificationRepository, NotificationRepository>()
 //message
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddSingleton<IMessageRepository, MessageRepository>();
+//like
+builder.Services.AddScoped<ILikeService, LikeService>();
+builder.Services.AddSingleton<ILikeRepository, LikeRepository>();
 
 var app = builder.Build();
 
