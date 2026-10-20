@@ -2,8 +2,8 @@
 {
     public class Tweet : BaseEntity, ILikable
     {
-        private string Content { get; set; }
-        private Guid UserId { get; set; }
+        public string Content { get; private set; }
+        public Guid UserId { get; private set; }
 
         public static int MaxContentLength = 280; // static property for max content length
 
@@ -15,6 +15,11 @@
         public bool CanBeLiked()
         {
             return true;
+        }
+
+        public void UpdateContent(string content)
+        {
+            Content = content;
         }
     }
 }
