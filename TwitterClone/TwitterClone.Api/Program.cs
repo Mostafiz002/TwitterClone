@@ -13,6 +13,8 @@ builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITweetService, TweetService>();
+builder.Services.AddScoped<IRetweetService, RetweetService>();
+builder.Services.AddSingleton<IRetweetRepository, RetweetRepository>();
 
 var app = builder.Build();
 

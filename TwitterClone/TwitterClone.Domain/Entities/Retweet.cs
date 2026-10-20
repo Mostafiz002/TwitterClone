@@ -10,5 +10,6 @@ public class Retweet : BaseEntity
     {
         UserId = userid;
         TweetId = tweetid;
+        RetweetedAt = DateTime.UtcNow;
     }
 }
