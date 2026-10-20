@@ -21,6 +21,9 @@ builder.Services.AddSingleton<IRetweetRepository, RetweetRepository>();
 //notification
 builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
+//message
+builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddSingleton<IMessageRepository, MessageRepository>();
 
 var app = builder.Build();
 
