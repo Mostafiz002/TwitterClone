@@ -1,42 +1,69 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TwitterClone.Application.Dtos;
+using TwitterClone.Application.Interfaces;
 
 namespace TwitterClone.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Route("api/[controller]")]
     public class BookmarksController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetBookmarks()
-        {
-            return Ok("Success");
-        }
+        private readonly IBookmarkService _bookmarkService;
 
-        [HttpGet("{id}")]
-        public IActionResult GetBookmarkById(int id)
+        public BookmarksController(IBookmarkService bookmarkService)
         {
-            return Ok($"{id} found");
+            _bookmarkService = bookmarkService;
         }
 
         [HttpPost]
-        public IActionResult CreateBookmark()
+        public IActionResult CreateBookmark(CreateBookmarkDto dto)
         {
-            return Ok("Success");
+            try
+            {
+                var bookmark = _bookmarkService.CreateBookmark(dto);
+
+                return CreatedAtAction(
+                    nameof(GetBookmarkById),
+                    new { id = bookmark.Id },
+                    bookmark);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
 
-        [HttpPatch("{id}")]
-        public IActionResult UpdateBookmark(int id)
+        [HttpGet("{id:guid}")]
+        public IActionResult GetBookmarkById(Guid id)
         {
-            return Ok($"{id} updated");
+            var bookmark = _bookmarkService.GetBookmarkById(id);
+
+            return bookmark is null ? NotFound() : Ok(bookmark);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteBookmark(int id)
+        [HttpGet("user/{userId:guid}")]
+        public IActionResult GetBookmarksByUserId(Guid userId)
         {
-            return Ok($"{id} deleted");
+            try
+            {
+                return Ok(_bookmarkService.GetBookmarksByUserId(userId));
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult RemoveBookmark(Guid id)
+        {
+            return _bookmarkService.RemoveBookmark(id)
+                ? NoContent()
+                : NotFound();
         }
     }
 }
