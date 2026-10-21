@@ -1,42 +1,68 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TwitterClone.Application.Dtos;
+using TwitterClone.Application.Interfaces;
 
 namespace TwitterClone.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Route("api/[controller]")]
     public class FollowsController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetFollows()
-        {
-            return Ok("Success");
-        }
+        private readonly IFollowService _followService;
 
-        [HttpGet("{id}")]
-        public IActionResult GetFollowById(int id)
+        public FollowsController(IFollowService followService)
         {
-            return Ok($"{id} found");
+            _followService = followService;
         }
 
         [HttpPost]
-        public IActionResult CreateFollow()
+        public IActionResult FollowUser(CreateFollowDto dto)
         {
-            return Ok("Success");
+            try
+            {
+                var follow = _followService.FollowUser(dto);
+
+                return CreatedAtAction(
+                    nameof(GetFollowById),
+                    new { id = follow.Id },
+                    follow);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
 
-        [HttpPatch("{id}")]
-        public IActionResult UpdateFollow(int id)
+        [HttpGet("{id:guid}")]
+        public IActionResult GetFollowById(Guid id)
         {
-            return Ok($"{id} updated");
+            var follow = _followService.GetFollowById(id);
+
+            return follow is null ? NotFound() : Ok(follow);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteFollow(int id)
+        [HttpGet("followers/{userId:guid}")]
+        public IActionResult GetFollowers(Guid userId)
         {
-            return Ok($"{id} deleted");
+            return Ok(_followService.GetFollowers(userId));
+        }
+
+        [HttpGet("following/{userId:guid}")]
+        public IActionResult GetFollowing(Guid userId)
+        {
+            return Ok(_followService.GetFollowing(userId));
+        }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult UnfollowUser(Guid id)
+        {
+            return _followService.UnfollowUser(id)
+                ? NoContent()
+                : NotFound();
         }
     }
 }

@@ -2,16 +2,47 @@
 {
     public abstract class Notification : BaseEntity
     {
-        private Guid UserId { get; set; }
-        protected string Message { get; set; }
-        protected string Type { get; set; }
-        private bool IsRead{ get; set; }
+        private Guid _userId;
+        private string _type;
+        private string _message;
+        private bool _isRead;
 
-        public Notification(string notificatinType) : base(Guid.NewGuid())
+        public Notification(string notificationType) : base(Guid.NewGuid())
         {
-            Type = notificatinType;
+            _type = notificationType;
+            _message = string.Empty;
+            _isRead = false;
         }
 
-        public abstract string GetMessage(); // mendatory method to be implemented by clild classes // abstruction
+        public Guid UserId
+        {
+            get { return _userId; }
+            set { _userId = value; }
+        }
+
+        public string Type
+        {
+            get { return _type; }
+            set { _type = value; }
+        }
+
+        protected string Message
+        {
+            get { return _message; }
+            set { _message = value; }
+        }
+
+        public bool IsRead
+        {
+            get { return _isRead; }
+            set { _isRead = value; }
+        }
+
+        public string GetNotificationInfo()
+        {
+            return $"UserId: {_userId}, NotificationType: {_type}";
+        }
+
+        public abstract string GetMessage();
     }
 }
