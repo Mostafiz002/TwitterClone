@@ -1,43 +1,68 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TwitterClone.Application.Dtos;
+using TwitterClone.Application.Interfaces;
 
 namespace TwitterClone.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Route("api/[controller]")]
     public class LikesController : ControllerBase
     {
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult GetLikes()
-        {
-            return Ok("Success");
-        }
+        private readonly ILikeService _likeService;
 
-        [HttpGet("{id}")]
-        public IActionResult GetLikeById(int id)
+        public LikesController(ILikeService likeService)
         {
-            return Ok($"{id} found");
+            _likeService = likeService;
         }
 
         [HttpPost]
-        public IActionResult CreateLike()
+        public IActionResult LikeTweet(CreateLikeDto dto)
         {
-            return Ok("Success");
+            try
+            {
+                var like = _likeService.LikeTweet(dto);
+
+                return CreatedAtAction(
+                    nameof(GetLikeById),
+                    new { id = like.Id },
+                    like);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
 
-        [HttpPatch("{id}")]
-        public IActionResult UpdateLike(int id)
+        [HttpGet("tweet/{tweetId:guid}")]
+        public IActionResult GetLikesByTweetId(Guid tweetId)
         {
-            return Ok($"{id} updated");
+            return Ok(_likeService.GetLikesByTweetId(tweetId));
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteLike(int id)
+        [HttpGet("user/{userId:guid}")]
+        public IActionResult GetLikesByUserId(Guid userId)
         {
-            return Ok($"{id} deleted");
+            return Ok(_likeService.GetLikesByUserId(userId));
+        }
+
+        [HttpGet("{id:guid}")]
+        public IActionResult GetLikeById(Guid id)
+        {
+            var like = _likeService.GetLikeById(id);
+
+            return like is null ? NotFound() : Ok(like);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public IActionResult UnlikeTweet(Guid id)
+        {
+            return _likeService.UnlikeTweet(id)
+                ? NoContent()
+                : NotFound();
         }
     }
 }

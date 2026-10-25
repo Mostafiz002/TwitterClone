@@ -4,12 +4,11 @@
     {
         public Guid UserId { get; private set; }
         public Guid TweetId { get; private set; }
-        public string Content { get; set; }
 
-        public Like() : base(Guid.NewGuid())
+        public Like(Guid userId, Guid tweetId) : base(Guid.NewGuid())
         {
-            UserId = Guid.NewGuid();
-            TweetId = Guid.NewGuid();
+            UserId = userId;
+            TweetId = tweetId;
         }
     }
 }
