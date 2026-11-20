@@ -6,8 +6,8 @@ namespace TwitterClone.Application.Dtos.TweetsDto
 {
     public class TweetDto
     {
-        public required string Id { get; set; }
+        public required Guid Id { get; set; }
         public required string Content { get; set; }
-        public required string UserId { get; set; }
+        public required Guid UserId { get; set; }
     }
 }
