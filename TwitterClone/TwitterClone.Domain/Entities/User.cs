@@ -10,6 +10,8 @@
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
+        public string? Number { get; set; }
+        public string PasswordHash { get; set; }
         private List<Guid> _followers = new List<Guid>();
         private List<Guid> _incomingNotifications = new List<Guid>();
 
