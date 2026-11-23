@@ -4,6 +4,7 @@ using System.Text;
 using TwitterClone.Application.Dtos.TweetsDto;
 using TwitterClone.Application.Interfaces;
 using TwitterClone.Domain.Entities;
+using TwitterClone.Utilities.Extensions;
 
 namespace TwitterClone.Application.Services
 {
@@ -30,9 +31,9 @@ namespace TwitterClone.Application.Services
 
             return new TweetDto
             {
-                Id = createTweet.Id.ToString(),
+                Id = createTweet.Id,
                 Content = createTweet.Content,
-                UserId = createTweet.UserId.ToString()
+                UserId = createTweet.UserId
             };
         }
 
@@ -42,9 +43,9 @@ namespace TwitterClone.Application.Services
 
             return tweets.Select(tweet => new TweetDto
             {
-                Id = tweet.Id.ToString(),
+                Id = tweet.Id,
                 Content = tweet.Content,
-                UserId = tweet.UserId.ToString()
+                UserId = tweet.UserId
             }).ToList();
         }
 
@@ -53,9 +54,9 @@ namespace TwitterClone.Application.Services
             var tweet = _tweetRepository.GetTweetById(id);
             return new TweetDto
             {
-                Id = tweet.Id.ToString(),
+                Id = tweet.Id,
                 Content = tweet.Content,
-                UserId = tweet.UserId.ToString()
+                UserId = tweet.UserId
             };
         }
 
@@ -72,9 +73,9 @@ namespace TwitterClone.Application.Services
 
             return new TweetDto
             {
-                Id = updatedTweet.Id.ToString(),
+                Id = updatedTweet.Id,
                 Content = updatedTweet.Content,
-                UserId = updatedTweet.UserId.ToString()
+                UserId = updatedTweet.UserId
             };
         }
         public bool? DeleteTweet(Guid id)
@@ -88,6 +89,11 @@ namespace TwitterClone.Application.Services
                 return null;
 
             return true;
+        }
+
+        public static bool IsValidContent(string content)
+        {
+            return !string.IsNullOrWhiteSpace(content) && content.Length <= Tweet.MaxContentLength && content.IsLong();
         }
     }
 }

@@ -30,10 +30,11 @@ namespace TwitterClone.Application.Services
 
             return new RetweetDto
             {
-                Id = retweet.Id.ToString(),
-                UserId = retweet.UserId.ToString(),
-                TweetId = retweet.TweetId.ToString(),
-                RetweetedAt = retweet.RetweetedAt
+                Id = retweet.Id,
+                UserId = retweet.UserId,
+                TweetId = retweet.TweetId,
+                Comment = retweet.Comment,
+                CreatedAt = retweet.CreatedAt
             };
         }
 
@@ -43,10 +44,11 @@ namespace TwitterClone.Application.Services
 
             return retweets.Select(retweet => new RetweetDto
             {
-                Id = retweet.Id.ToString(),
-                UserId = retweet.UserId.ToString(),
-                TweetId = retweet.TweetId.ToString(),
-                RetweetedAt = retweet.RetweetedAt
+                Id = retweet.Id,
+                UserId = retweet.UserId,
+                TweetId = retweet.TweetId,
+                Comment = retweet.Comment,
+                CreatedAt = retweet.CreatedAt
             }).ToList();
         }
 
@@ -59,10 +61,11 @@ namespace TwitterClone.Application.Services
 
             return new RetweetDto
             {
-                Id = retweet.Id.ToString(),
-                UserId = retweet.UserId.ToString(),
-                TweetId = retweet.TweetId.ToString(),
-                RetweetedAt = retweet.RetweetedAt
+                Id = retweet.Id,
+                UserId = retweet.UserId,
+                TweetId = retweet.TweetId,
+                Comment = retweet.Comment,
+                CreatedAt = retweet.CreatedAt
             };
         }
 

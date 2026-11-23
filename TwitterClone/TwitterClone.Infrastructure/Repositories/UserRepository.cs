@@ -37,6 +37,11 @@ namespace TwitterClone.Infrastructure.Repositories
             return _users.SingleOrDefault(u => u.Id == id);
         }
 
+        public async Task<User?> GetUserByIdAsync(Guid id)
+        {
+            return _users.SingleOrDefault(u => u.Id == id);
+        }
+
         public List<User> GetUsers()
         {
             return _users;

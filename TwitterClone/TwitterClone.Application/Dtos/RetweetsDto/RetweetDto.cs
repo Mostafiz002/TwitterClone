@@ -6,9 +6,11 @@ namespace TwitterClone.Application.Dtos.RetweetsDto
 {
     public class RetweetDto
     {
-        public required string Id { get; set; }
-        public required string UserId { get; set; }
-        public required string TweetId { get; set; }
-        public required DateTime RetweetedAt { get; set; }
+        public required Guid Id { get; set; }
+        public required Guid UserId { get; set; }
+        public required Guid TweetId { get; set; }
+        public string? Comment { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? ModifiedAt { get; set; }
     }
 }

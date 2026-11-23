@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TwitterClone.Domain\TwitterClone.Domain.csproj" />
+    <ProjectReference Include="..\TwitterClone.Utilities\TwitterClone.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\Tweet\" />
+    <Folder Include="Interfaces\User\" />
   </ItemGroup>
 
 </Project>
