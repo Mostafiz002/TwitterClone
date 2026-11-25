@@ -1,6 +1,7 @@
 using Scalar.AspNetCore;
 using TwitterClone.Application.Interfaces;
 using TwitterClone.Application.Services;
+using TwitterClone.Infrastructure;
 using TwitterClone.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +34,8 @@ builder.Services.AddSingleton<IFollowRepository, FollowRepository>();
 //bookmark
 builder.Services.AddScoped<IBookmarkService, BookmarkService>();
 builder.Services.AddSingleton<IBookmarkRepository, BookmarkRepository>();
+
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

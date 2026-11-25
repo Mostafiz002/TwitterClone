@@ -1,35 +1,48 @@
-﻿using TwitterClone.Application.Interfaces;
+﻿
+using TwitterClone.Application.Interfaces;
 using TwitterClone.Domain.Entities;
+using TwitterClone.Infrastructure.Persistence;
 
-namespace TwitterClone.Infrastructure.Repositories;
-
-public class NotificationRepository : INotificationRepository
+namespace TwitterClone.Infrastructure.Repositories
 {
-    private readonly List<Notification> _notifications = new();
-
-    public Notification AddNotification(Notification notification)
+    public class NotificationRepository : INotificationRepository
     {
-        _notifications.Add(notification);
-        return notification;
-    }
+        private readonly TwitterCloneDbContext _context;
 
-    public List<Notification> GetNotifications()
-    {
-        return _notifications;
-    }
+        public NotificationRepository(TwitterCloneDbContext context)
+        {
+            _context = context;
+        }
 
-    public Notification? GetNotificationById(Guid id)
-    {
-        return _notifications.FirstOrDefault(n => n.Id == id);
-    }
+        public Notification AddNotification(Notification notification)
+        {
+            _context.Notifications.Add(notification);
+            _context.SaveChanges();
 
-    public bool DeleteNotification(Guid id)
-    {
-        var notification = GetNotificationById(id);
+            return notification;
+        }
 
-        if (notification is null)
-            return false;
+        public List<Notification> GetNotifications()
+        {
+            return _context.Notifications.ToList();
+        }
 
-        return _notifications.Remove(notification);
+        public Notification? GetNotificationById(Guid id)
+        {
+            return _context.Notifications.Find(id);
+        }
+
+        public bool DeleteNotification(Guid id)
+        {
+            var notification = _context.Notifications.Find(id);
+
+            if (notification is null)
+                return false;
+
+            _context.Notifications.Remove(notification);
+            _context.SaveChanges();
+
+            return true;
+        }
     }
 }
