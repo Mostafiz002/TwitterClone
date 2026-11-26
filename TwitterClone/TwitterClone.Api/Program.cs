@@ -1,40 +1,40 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
-using TwitterClone.Application.Interfaces;
-using TwitterClone.Application.Services;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using TwitterClone.Application;
 using TwitterClone.Infrastructure;
-using TwitterClone.Infrastructure.Repositories;
+using TwitterClone.Infrastructure.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
-// Register
-//user
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
-//tweet
-builder.Services.AddSingleton<ITweetRepository, TweetRepository>();
-builder.Services.AddScoped<ITweetService, TweetService>();
-//retweet
-builder.Services.AddScoped<IRetweetService, RetweetService>();
-builder.Services.AddSingleton<IRetweetRepository, RetweetRepository>();
-//notification
-builder.Services.AddScoped<INotificationService, NotificationService>();
-builder.Services.AddSingleton<INotificationRepository, NotificationRepository>();
-//message
-builder.Services.AddScoped<IMessageService, MessageService>();
-builder.Services.AddSingleton<IMessageRepository, MessageRepository>();
-//like
-builder.Services.AddScoped<ILikeService, LikeService>();
-builder.Services.AddSingleton<ILikeRepository, LikeRepository>();
-//follow
-builder.Services.AddScoped<IFollowService, FollowService>();
-builder.Services.AddSingleton<IFollowRepository, FollowRepository>();
-//bookmark
-builder.Services.AddScoped<IBookmarkService, BookmarkService>();
-builder.Services.AddSingleton<IBookmarkRepository, BookmarkRepository>();
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
 
+builder.Services.AddSingleton(jwtSettings);
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = jwtSettings.Issuer,
+        ValidateAudience = true,
+        ValidAudience = jwtSettings.Audience,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+        ClockSkew = TimeSpan.FromSeconds(30),
+        NameClaimType = JwtRegisteredClaimNames.Email
+    };
+});
+
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
@@ -46,6 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

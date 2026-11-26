@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TwitterClone.Application.Interfaces;
+using TwitterClone.Infrastructure.Auth;
 using TwitterClone.Infrastructure.Persistence;
 using TwitterClone.Infrastructure.Repositories;
 
@@ -16,18 +17,19 @@ namespace TwitterClone.Infrastructure
 
             // Registers TwitterCloneDbContext as scoped: one context per HTTP request.
             services.AddDbContext<TwitterCloneDbContext>(options => options.UseNpgsql(connectionString));
- 
-            // Scoped because they depend on the scoped DbContext.
-             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ITweetRepository, TweetRepository>();
 
-            // Still in memory. Moving these to EF Core is today's homework.
+            // Scoped because they depend on the scoped DbContext.
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITweetRepository, TweetRepository>();
             services.AddScoped<IBookmarkRepository, BookmarkRepository>();
             services.AddScoped<IFollowRepository, FollowRepository>();
             services.AddScoped<ILikeRepository, LikeRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IRetweetRepository, RetweetRepository>();
+
+            services.AddScoped<ITokenService, JwtTokenService>();
+            services.AddScoped<IPasswordHasher, PasswordHasher>();
 
             return services;
         }

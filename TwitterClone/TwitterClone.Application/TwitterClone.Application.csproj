@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TwitterClone.Domain\TwitterClone.Domain.csproj" />
-    <ProjectReference Include="..\TwitterClone.Utilities\TwitterClone.Utilities.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.15" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Tweet\" />
-    <Folder Include="Interfaces\User\" />
+    <ProjectReference Include="..\TwitterClone.Domain\TwitterClone.Domain.csproj" />
+    <ProjectReference Include="..\TwitterClone.Utilities\TwitterClone.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
