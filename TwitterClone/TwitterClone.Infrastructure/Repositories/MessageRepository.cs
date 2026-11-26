@@ -1,21 +1,30 @@
-﻿using TwitterClone.Application.Interfaces;
+﻿
+using TwitterClone.Application.Interfaces;
 using TwitterClone.Domain.Entities;
+using TwitterClone.Infrastructure.Persistence;
 
 namespace TwitterClone.Infrastructure.Repositories
 {
     public class MessageRepository : IMessageRepository
     {
-        private readonly List<Message> _messages = new();
+        private readonly TwitterCloneDbContext _context;
+
+        public MessageRepository(TwitterCloneDbContext context)
+        {
+            _context = context;
+        }
 
         public Message AddMessage(Message message)
         {
-            _messages.Add(message);
+            _context.Messages.Add(message);
+            _context.SaveChanges();
+
             return message;
         }
 
         public List<Message> GetMessagesByUserId(Guid userId)
         {
-            return _messages
+            return _context.Messages
                 .Where(m => m.SenderId == userId || m.ReceiverId == userId)
                 .OrderBy(m => m.SentAt)
                 .ToList();
@@ -23,17 +32,20 @@ namespace TwitterClone.Infrastructure.Repositories
 
         public Message? GetMessageById(Guid id)
         {
-            return _messages.FirstOrDefault(m => m.Id == id);
+            return _context.Messages.Find(id);
         }
 
         public bool DeleteMessage(Guid id)
         {
-            var message = GetMessageById(id);
+            var message = _context.Messages.Find(id);
 
             if (message is null)
                 return false;
 
-            return _messages.Remove(message);
+            _context.Messages.Remove(message);
+            _context.SaveChanges();
+
+            return true;
         }
     }
 }

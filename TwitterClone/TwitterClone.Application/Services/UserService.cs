@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TwitterClone.Application.Dtos.UsersDto;
 using TwitterClone.Application.Interfaces;
+using TwitterClone.Application.Mappings;
 using TwitterClone.Domain.Entities;
 
 namespace TwitterClone.Application.Services
@@ -10,12 +11,15 @@ namespace TwitterClone.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        public IPasswordHasher _PasswordHasher;
 
         public UserService(
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IPasswordHasher passwordHasher
             )
         {
             _userRepository = userRepository;
+            _PasswordHasher = passwordHasher;
         }
 
         public UserDto? CreateUser(CreateUserDto createUserDto)
@@ -38,6 +42,7 @@ namespace TwitterClone.Application.Services
             {
                 FirstName = createUserDto.FirstName,
                 LastName = createUserDto.LastName,
+                PasswordHash = _PasswordHasher.Hash(createUserDto.ToDto(), createUserDto.Password)
             });
 
             return new UserDto
