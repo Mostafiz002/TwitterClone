@@ -3,9 +3,9 @@
 {
     public class User : BaseEntity, INotifiable, IFollowable
     {
-        public User(string email) : base(Guid.NewGuid())
+        public User() : base(Guid.NewGuid())
         {
-            Email = email;
+
         }
         public string FirstName { get; set; }
         public string LastName { get; set; }

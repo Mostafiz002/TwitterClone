@@ -31,7 +31,11 @@ namespace TwitterClone.Application.Services
                 throw new InvalidOperationException(
                     "You are already following this user.");
 
-            var follow = new Follow(dto.FollowerId, dto.FollowingId);
+            var follow = new Follow()
+            {
+                FollowerId = dto.FollowerId,
+                FollowingId = dto.FollowingId
+            };
 
             _followRepository.AddFollow(follow);
 

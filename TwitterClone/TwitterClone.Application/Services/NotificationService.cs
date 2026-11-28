@@ -19,7 +19,6 @@ public class NotificationService : INotificationService
         {
             "like" => new LikeNotification(dto.ActorUserId),
             "comment" => new CommentNotification(dto.ActorUserId),
-            "mension" => new MensionNotification(dto.ActorUserId),
             "friendrequest" => new FriendRequestNotification(dto.ActorUserId),
             "system" => new SystemNotification
             {
@@ -71,8 +70,8 @@ public class NotificationService : INotificationService
         {
             LikeNotification n => n.LikeByUserId,
             CommentNotification n => n.CommentByUserId,
-            MensionNotification n => n.MensionByUserId,
-            FriendRequestNotification n => n.FriendRequestByUserId,
+            MentionNotification n => n.MentionedByUserId,
+            FriendRequestNotification n => n.RequestedByUserId,
             SystemNotification n => n.SystemNotificationByUserId,
             _ => Guid.Empty
         };

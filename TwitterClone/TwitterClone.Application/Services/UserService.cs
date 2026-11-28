@@ -38,10 +38,11 @@ namespace TwitterClone.Application.Services
                 return null;
             }
 
-            var createdUser = _userRepository.AddUser(new User(createUserDto.Email)
+            var createdUser = _userRepository.AddUser(new User()
             {
                 FirstName = createUserDto.FirstName,
                 LastName = createUserDto.LastName,
+                Email = createUserDto.Email,
                 PasswordHash = _PasswordHasher.Hash(createUserDto.ToDto(), createUserDto.Password)
             });
 

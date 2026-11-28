@@ -28,7 +28,11 @@ namespace TwitterClone.Application.Services
                 throw new InvalidOperationException(
                     "This user has already liked this tweet.");
 
-            var like = new Like(dto.UserId, dto.TweetId);
+            var like = new Like()
+            {
+                UserId = dto.UserId,
+                TweetId = dto.TweetId
+            };
 
             _likeRepository.AddLike(like);
 

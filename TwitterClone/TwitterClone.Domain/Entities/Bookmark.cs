@@ -2,13 +2,11 @@
 {
     public class Bookmark : BaseEntity
     {
-        public Guid UserId { get; }
-        public Guid TweetId { get; }
+        public Guid UserId { get; set; }
+        public Guid TweetId { get; set; }
 
-        public Bookmark(Guid userid, Guid tweetid) : base(Guid.NewGuid())
+        public Bookmark() : base(Guid.NewGuid())
         {
-            UserId = userid;
-            TweetId = tweetid;
         }
     }
 }

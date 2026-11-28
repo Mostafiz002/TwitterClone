@@ -22,10 +22,11 @@ namespace TwitterClone.Application.Services
             }
 
             var retweet = _retweetRepository.AddRetweet(
-                new Retweet(
-                    createRetweetDto.UserId,
-                    createRetweetDto.TweetId
-                )
+                new Retweet()
+                {
+                    UserId = createRetweetDto.UserId,
+                    TweetId = createRetweetDto.TweetId
+                }
             );
 
             return new RetweetDto

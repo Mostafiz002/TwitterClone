@@ -25,9 +25,11 @@ namespace TwitterClone.Application.Services
                 return null;
             }
 
-            var createTweet = _tweetRepository.AddTweet(new Tweet(createTweetDto.Content,
-                createTweetDto.UserId)
-            { });
+            var createTweet = _tweetRepository.AddTweet(new Tweet()
+            { 
+                Content = createTweetDto.Content,
+                UserId = createTweetDto.UserId
+            });
 
             return new TweetDto
             {

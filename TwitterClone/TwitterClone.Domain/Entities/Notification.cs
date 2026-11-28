@@ -7,12 +7,12 @@
         private string _message;
         private bool _isRead;
 
+
         public Notification(string notificationType) : base(Guid.NewGuid())
         {
             _type = notificationType;
-            _message = string.Empty;
-            _isRead = false;
         }
+
 
         public Guid UserId
         {

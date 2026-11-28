@@ -2,13 +2,12 @@
 {
     public class Like : BaseEntity
     {
-        public Guid UserId { get; private set; }
-        public Guid TweetId { get; private set; }
+        public Guid UserId { get; set; }
+        public Guid TweetId { get; set; }
 
-        public Like(Guid userId, Guid tweetId) : base(Guid.NewGuid())
+        public Like() : base(Guid.NewGuid())
         {
-            UserId = userId;
-            TweetId = tweetId;
+          
         }
     }
 }

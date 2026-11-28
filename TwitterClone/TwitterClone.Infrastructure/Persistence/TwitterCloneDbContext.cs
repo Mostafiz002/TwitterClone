@@ -21,6 +21,10 @@ namespace TwitterClone.Infrastructure.Persistence
         public DbSet<Like> Likes { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<LikeNotification> LikeNotifications { get; set; }
+        public DbSet<CommentNotification> CommentNotifications { get; set; }
+        public DbSet<MentionNotification> MentionNotifications { get; set; }
+        public DbSet<FriendRequestNotification> FriendRequestNotification { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

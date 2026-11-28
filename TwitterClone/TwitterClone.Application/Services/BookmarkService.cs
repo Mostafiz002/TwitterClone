@@ -28,7 +28,12 @@ namespace TwitterClone.Application.Services
                 throw new InvalidOperationException(
                     "This tweet is already bookmarked by the user.");
 
-            var bookmark = new Bookmark(dto.UserId, dto.TweetId);
+            var bookmark = new Bookmark()
+            {
+                UserId = dto.UserId,
+                TweetId = dto.TweetId
+            };
+            
 
             _bookmarkRepository.AddBookmark(bookmark);
 
